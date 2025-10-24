@@ -113,6 +113,10 @@ header nav ul {
   color: #333;
   font-size: 36px;
   border-radius: 4px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .login-icon-button {
@@ -123,6 +127,7 @@ header nav ul {
   color: #333;
   font-size: 36px;
   border-radius: 4px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
