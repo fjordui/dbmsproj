@@ -1,5 +1,6 @@
 import { formatISO, formatISO9075 } from "date-fns";
 import supabase, { supabaseWithToken } from "./db";
+import { riskySupabaseClient } from "./supabaseRiskyClient";
 
 export async function getRoomReservations(id) {
   let { data: reservations, error } = await supabase
@@ -16,8 +17,7 @@ export async function getGuestReservations(guest_id) {
   let { data: reservations, error } = await supabase
     .from("reservations")
     .select("*, rooms(thumbnail, name, capacity)")
-    .eq("guest_id", guest_id)
-    .is("deleted_at", null);
+    .eq("guest_id", guest_id);
 
   if (error) {
     console.log("SUPABASE ERROR");
@@ -46,13 +46,14 @@ export async function createNewReservation(reservationObj) {
     reserved_price,
     start_date,
     end_date,
-    stripe_session_id,
     status,
   } = reservationObj;
 
-  const { data: reservations, error } = await supabaseWithToken(
-    supabaseAccessToken
-  )
+  const client = supabaseAccessToken
+    ? supabaseWithToken(supabaseAccessToken)
+    : riskySupabaseClient;
+
+  const { data: reservations, error } = await client
     .from("reservations")
     .insert([
       {
@@ -63,7 +64,6 @@ export async function createNewReservation(reservationObj) {
         message,
         start_date,
         end_date,
-        stripe_session_id,
         status,
       },
     ])
@@ -86,7 +86,7 @@ export async function deleteReservation(supabaseAccessToken, id) {
     supabaseAccessToken
   )
     .from("reservations")
-    .update({ deleted_at: formatISO9075(new Date()) })
+    .update({ status: "cancelled" })
     .eq("id", id);
 
   console.log("datetime", formatISO9075(new Date()));
@@ -143,17 +143,8 @@ export async function cancelReservation(supabaseAccessToken, id) {
 
 export async function getReservationByStripeSessionId(session_id) {
   console.log({ session_id });
-  let { data: reservation, error } = await supabase
-    .from("reservations")
-    .select("*, rooms(thumbnail, name)")
-    .eq("stripe_session_id", session_id)
-    .limit(1)
-    .single();
-
-  if (error) {
-    console.log("SUPABASE ERROR");
-    console.log(error);
-  }
-
-  return reservation;
+  // Note: stripe_session_id column removed from database
+  // This function now returns null as session IDs are not stored
+  // Payment confirmation is handled via Stripe webhooks instead
+  return null;
 }

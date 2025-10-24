@@ -36,7 +36,7 @@ async function CheckoutSection() {
     if (!room) notFound();
     if (!guest) {
       console.error("Guest not found for user:", session.user?.id);
-      redirect("/account"); // or wherever makes sense to redirect
+      redirect("/account/profile");
     }
 
   async function createReservationAction(prevState, formData) {

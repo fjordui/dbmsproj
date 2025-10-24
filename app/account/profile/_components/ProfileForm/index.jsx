@@ -29,7 +29,7 @@ function ProfileForm({ guestUpdateAction, guest }) {
     <form action={formAction}>
       <div className={styles.profileFormInputs}>
         <div>
-          <label className={styles.formLabel}>Fullname</label>
+          <label className={styles.formLabel}>Full Name</label>
           <input
             className={styles.formControl}
             type="text"
@@ -57,18 +57,21 @@ function ProfileForm({ guestUpdateAction, guest }) {
         <div>
           <label className={styles.formLabel}>
             <span>Nationality</span>
-            <span className={styles.countryFlag}>
-              <img
-                src={guest.countryFlag}
-                alt={`${guest.nationality ?? "country"} flag`}
-              />
-            </span>
+            {guest.countryFlag && (
+              <span className={styles.countryFlag}>
+                <img
+                  src={guest.countryFlag}
+                  alt={`${guest.nationality ?? "country"} flag`}
+                />
+              </span>
+            )}
           </label>
 
           <SelectCountry
             className={styles.formControl}
             name={"nationality"}
             defaultCountry={guest.nationality}
+            flag={guest.countryFlag}
           />
           {state?.nationality && (
             <span className={styles.errorMessage}>{state.nationality}</span>

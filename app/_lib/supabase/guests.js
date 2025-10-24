@@ -1,47 +1,35 @@
 import supabase, { supabaseWithToken } from "./db";
 
 import { riskySupabaseClient } from "./supabaseRiskyClient";
+
 export async function getGuestById(id) {
-  let request = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/guests?id=${id}`,
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_KEY}`,
-      },
-    }
-  );
+  const { data: guest, error } = await riskySupabaseClient
+    .from("guests")
+    .select("id, email, fullname, avatar, phone, nationality, countryFlag, nationalID, created_at")
+    .eq("id", id)
+    .single();
 
-  const response = await request.json();
+  if (error) {
+    console.error("Error fetching guest by ID:", error);
+    return null;
+  }
 
-  const { data: guests, error } = response;
-
-  // await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  return guests;
+  return guest;
 }
 
 export async function getGuestByEmail(email) {
-  let request = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/guests?email=${email}`,
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_KEY}`,
-      },
-    }
-  );
-
-  const response = await request.json();
-
-  const { data: guests, error } = response;
-
-  // await new Promise((resolve) => setTimeout(resolve, 2000));
+  const { data: guest, error } = await riskySupabaseClient
+    .from("guests")
+    .select("id, email, fullname, avatar, phone, nationality, countryFlag, nationalID, created_at")
+    .eq("email", email)
+    .single();
 
   if (error) {
-    console.log({ error: error.message });
-    throw new Error(error.message);
+    console.error("Error fetching guest by email:", error);
+    return null;
   }
 
-  return guests;
+  return guest;
 }
 
 export async function getFullGuestByEmail(email) {

@@ -14,7 +14,7 @@ function RoomItem({ id, imgPath, price, link, title }) {
         <div className={styles.roomDescription}>
           <div>
             <h2 className={styles.roomTitle}>{title}</h2>
-            <Link href={`/rooms/${link}`}>From ${price} / Night</Link>
+            <Link href={`/rooms/${link}`}>From ₹{price} / Night</Link>
           </div>
         </div>
       </div>

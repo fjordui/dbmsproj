@@ -24,7 +24,7 @@ async function RoomContainer({ params }) {
   const room_images = await getRoomImages(room?.id);
 
   const images = room_images?.map(
-  (item) => `${SUPABASE_ROOMS_URL}/${item.img_path}`
+  (item) => `${SUPABASE_ROOMS_URL}/${item.image_url}`
 ) ?? [];
 
   if (!room) notFound();

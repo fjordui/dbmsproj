@@ -7,15 +7,33 @@
   .aboutContainer {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 56px;
   }
 }
 
+.description {
+  text-align: center;
+}
+
+@media(min-width: 720px) {
+  .description {
+    text-align: left;
+  }
+}
+
 .aboutContainer p {
-  text-align: justify;
+  text-align: center;
   line-height: 1.8;
   font-size: 18px;
   color: #333;
+  margin-bottom: 16px;
+}
+
+@media(min-width: 720px) {
+  .aboutContainer p {
+    text-align: left;
+  }
 }
 
 .gallery {

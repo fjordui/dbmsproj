@@ -31,8 +31,8 @@ export async function GET(req) {
   const to = Number(req.nextUrl.searchParams.get("to"));
   const order = req.nextUrl.searchParams.get("order") === "asc" ? "asc" : "desc";
 
-  if (id && !/^-?\d+$/.test(id)) {
-    return NextResponse.json({ status: "error", message: "Invalid id format (Expected Big Int 8)" }, { status: 422 });
+  if (id && !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) {
+    return NextResponse.json({ status: "error", message: "Invalid id format (Expected UUID)" }, { status: 422 });
   }
 
   if ((!isNaN(from) && isNaN(to)) || (isNaN(from) && !isNaN(to))) {
@@ -41,7 +41,7 @@ export async function GET(req) {
 
   let query = riskySupabaseClient.from("guests_view").select(select);
   if (email) query = query.eq("email", email);
-  if (id) query = query.eq("id", Number(id));
+  if (id) query = query.eq("id", id);
   if (or) query = query.or(or);
   if (!isNaN(from) && !isNaN(to)) query = query.range(from, to);
   if (order) query = query.order("id", order);

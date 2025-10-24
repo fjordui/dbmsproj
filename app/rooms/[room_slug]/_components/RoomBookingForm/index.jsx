@@ -73,8 +73,8 @@ function RoomBookingForm({ bookingAction, room }) {
             <FontAwesomeIcon icon={faCalendar} />
           </div>
           <div className={styles.formControl}>
-            <label>Check In</label>
-            <input type="date" value={startDate} disabled />
+            <label>Check In *</label>
+            <input type="date" value={startDate} disabled required />
           </div>
         </div>
         <div className={styles.formInput}>
@@ -82,8 +82,8 @@ function RoomBookingForm({ bookingAction, room }) {
             <FontAwesomeIcon icon={faCalendar} />
           </div>
           <div className={styles.formControl}>
-            <label>Check Out</label>
-            <input type="date" value={endDate} disabled />
+            <label>Check Out *</label>
+            <input type="date" value={endDate} disabled required />
           </div>
         </div>
         <div className={styles.formInput}>
@@ -91,8 +91,8 @@ function RoomBookingForm({ bookingAction, room }) {
             <FontAwesomeIcon icon={faUsers} />
           </div>
           <div className={styles.formControl}>
-            <label>Guests</label>
-            <select name="" id="" onChange={(e) => setGuests(e.target.value)}>
+            <label>Guests *</label>
+            <select name="" id="" onChange={(e) => setGuests(e.target.value)} required>
               <option value="">Select guests number</option>
               {Array.from(Array(room?.capacity ?? 0)).map((item, index) => (
                 <option key={index} value={index + 1}>

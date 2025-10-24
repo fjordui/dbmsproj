@@ -8,25 +8,21 @@ import { NextResponse } from "next/server";
 
 export async function POST(req, res) {
   const requestBody = await req.json();
-  const payload = requestBody.data?.object?.metadata?.payload;
+  const metadata = requestBody.data?.object?.metadata;
 
-  if (!payload)
+  if (!metadata || !metadata.guest_id || !metadata.room_id)
     return NextResponse.json(
       { status: "error", message: "missing required data" },
       { status: 400 }
     );
 
-  const metadata = JSON.parse(payload);
-
-  // 2 - CHECK PENDING RESERVATION
-  if (!metadata.pending_reservation) {
-    return NextResponse.json(
-      { status: "error", message: "invalid requirements" },
-      { status: 422 }
-    );
-  }
-
-  const pending_reservation = metadata.pending_reservation;
+  const pending_reservation = {
+    room_id: metadata.room_id,
+    start_date: metadata.start_date,
+    end_date: metadata.end_date,
+    guests_count: parseInt(metadata.guests_count),
+    message: metadata.message || "",
+  };
 
   const [guest, room] = await Promise.all([
     getGuestById(metadata.guest_id),
@@ -54,16 +50,14 @@ export async function POST(req, res) {
       );
 
       const new_res = await createNewReservation({
-        authToken: metadata?.supabaseAccessToken,
         room_id: room.id,
         guest_id: guest.id,
-        guest_fullname: guest.fullname, // just preserving guest fullname in case of account delete
+        guest_fullname: guest.fullname,
         guests_count: pending_reservation.guests_count,
         message: pending_reservation.message,
         reserved_price: totalUSDPrice,
         start_date: pending_reservation.start_date,
         end_date: pending_reservation.end_date,
-        stripe_session_id: metadata.session_id,
         status: "confirmed",
       });
 

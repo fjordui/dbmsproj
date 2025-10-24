@@ -40,7 +40,7 @@ function CheckoutForm({ guest, createReservationAction, bookingCancelAction, chi
       <div className={styles.formControlRow}>
         <div className={styles.formControl}>
           <label htmlFor="" className={styles.formLabel}>
-            Fullname
+            Full Name
           </label>
           <input type="text" name="fullname" defaultValue={guest.fullname} className={styles.formInput} />
           {state?.fullname && <span className={styles.errorMessage}>{state?.fullname}</span>}
@@ -48,7 +48,7 @@ function CheckoutForm({ guest, createReservationAction, bookingCancelAction, chi
 
         <div className={styles.formControl}>
           <label htmlFor="" className={styles.formLabel}>
-            NationalID
+            National ID
           </label>
           <input type="text" name="nationalID" defaultValue={guest.nationalID} className={styles.formInput} />
           {state?.nationalID && <span className={styles.errorMessage}>{state?.nationalID}</span>}
@@ -74,9 +74,11 @@ function CheckoutForm({ guest, createReservationAction, bookingCancelAction, chi
       <div className={styles.formControl}>
         <label htmlFor="" className={styles.formLabel}>
           <span>Where are you from?</span>{" "}
-          <span className={styles.countryFlag}>
-            <img src={guest.countryFlag} alt={`${guest.nationality ?? "country"} flag`} />
-          </span>
+          {guest.countryFlag && (
+            <span className={styles.countryFlag}>
+              <img src={guest.countryFlag} alt={`${guest.nationality ?? "country"} flag`} />
+            </span>
+          )}
         </label>
         {children}
         {state?.nationality && <span className={styles.errorMessage}>{state?.nationality}</span>}
@@ -84,7 +86,7 @@ function CheckoutForm({ guest, createReservationAction, bookingCancelAction, chi
 
       <div className={styles.formControl}>
         <label htmlFor="" className={styles.formLabel}>
-          More Informations
+          Notes
         </label>
         <textarea name="message" id="" className={styles.formTextArea} rows={5}></textarea>
         {state?.message && <span className={styles.errorMessage}>{state?.message}</span>}

@@ -65,7 +65,7 @@ function ReservationCard({ reservation }) {
           </p>
 
           <p>
-            <span className={styles.price}>${reservation.reserved_price.toFixed(2)}</span> - {reservation.guests_count}{" "}
+            <span className={styles.price}>₹{reservation.reserved_price.toFixed(2)}</span> - {reservation.guests_count}{" "}
             Guest(s)
           </p>
 

@@ -32,7 +32,7 @@ function CredentialsForm({ registerAction, authAction }) {
 
       <div className={styles.formControl}>
         <label htmlFor="" className={styles.loginLabel}>
-          Fullname
+          Full Name
         </label>
         <input type="text" name="fullname" className={styles.loginInput} />
         {state.fullname && <span className={styles.errorMessage}>{state.fullname}</span>}

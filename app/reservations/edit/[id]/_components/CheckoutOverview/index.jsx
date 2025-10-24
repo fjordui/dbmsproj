@@ -45,24 +45,24 @@ function CheckoutOverview({ reservation, guests, start, end }) {
           <div className={styles.bookingSummary}>
             <h3>Pricing Breakdown</h3>
             <p>
-              <span>${reservation.rooms.price.toFixed(2)} x night (Base Rate for 1 Guest)</span>
-              <span>${reservation.rooms.price.toFixed(2)}</span>
+              <span>₹{reservation.rooms.price.toFixed(2)} x night (Base Rate for 1 Guest)</span>
+              <span>₹{reservation.rooms.price.toFixed(2)}</span>
             </p>
             <p>
               <span>
-                Additional Guests ({guests - 1} x ${Number(reservation.rooms.price / 2).toFixed(2)}per night)
+                Additional Guests ({guests - 1} x ₹{Number(reservation.rooms.price / 2).toFixed(2)}per night)
               </span>
-              <span>${guestsPrice}</span>
+              <span>₹{guestsPrice}</span>
             </p>
             <p>
               <span>Total per Night: </span>
-              <span>${totalPerNight}</span>
+              <span>₹{totalPerNight}</span>
             </p>
           </div>
 
           <div className={styles.totalPrice}>
             <span>Total Without Taxes ({totalNights} Nights)</span>
-            <span>${totalPrice}</span>
+            <span>₹{totalPrice}</span>
           </div>
         </Card.Description>
       </Card>

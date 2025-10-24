@@ -91,7 +91,7 @@ function ReservationOverview({ deleteAction, reservation, allowDelete = true, re
             </p>
             <p>
               <span>Total Price</span>
-              <span>${Number(reservation.reserved_price).toFixed(2)}</span>
+              <span>₹{Number(reservation.reserved_price).toFixed(2)}</span>
             </p>
           </div>
 

@@ -121,7 +121,7 @@ export async function POST(req, res) {
             quantity: 1,
             price_data: {
               // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-              currency: "usd",
+              currency: "inr",
               unit_amount: totalCentPrice,
               product_data: {
                 name: room.name,
@@ -135,13 +135,14 @@ export async function POST(req, res) {
                   "LLLL do yyyy"
                 )} : (${totalNights}) Nights`,
                 images: [
-                  `https://kapumuyablpuibhumzdj.supabase.co/storage/v1/object/public/rooms-imgs/${room.thumbnail}`,
+                  `${process.env.NEXT_PUBLIC_SUPABASE_IMGS_URL}/${room.thumbnail}`,
                 ],
               },
             },
           },
         ],
         mode: "payment",
+        customer_email: guest.email,
         expires_at: Math.floor(Date.now() / 1000) + 3600 * 2, // EXPIRE IN 2 HOURS FROM CREATION TIME
         success_url: `${process.env.NEXT_PUBLIC_APP_URL}/payment?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/reservations/checkout`,
@@ -151,13 +152,12 @@ export async function POST(req, res) {
         session.id,
         {
           metadata: {
-            payload: JSON.stringify({
-              session_id: session.id,
-              pending_reservation,
-              guest_id: guest.id,
-              session_id: session.id,
-              supabaseAccessToken,
-            }),
+            guest_id: guest.id,
+            room_id: pending_reservation.room_id,
+            start_date: pending_reservation.start_date,
+            end_date: pending_reservation.end_date,
+            guests_count: pending_reservation.guests_count.toString(),
+            message: pending_reservation.message || "",
           },
         }
       );

@@ -139,6 +139,44 @@ header nav ul {
   }
 }
 
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #161616;
+  transition: all 150ms linear;
+}
+
+.logo-container:hover {
+  color: #dc143c;
+}
+
+.logo-icon {
+  font-size: 28px;
+}
+
+.logo-text {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 820px) {
+  .logo-text {
+    font-size: 18px;
+  }
+
+  .logo-icon {
+    font-size: 24px;
+  }
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 /* END HEADER */
 
 /* SLIDER */

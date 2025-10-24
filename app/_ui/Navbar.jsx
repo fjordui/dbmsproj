@@ -1,5 +1,5 @@
 "use client";
-import { faBars, faClose } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faClose, faHotel } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import fa_styles from "@fortawesome/fontawesome-svg-core/styles.css";
@@ -13,7 +13,10 @@ function Navbar({ user, signOutAction }) {
   return (
     <header>
       <div className="container header-items">
-        <h2>LOGO</h2>
+        <Link href="/" className="logo-container">
+          <FontAwesomeIcon icon={faHotel} className="logo-icon" />
+          <h2 className="logo-text">LuxeStay Hotel</h2>
+        </Link>
         <nav className={`navbar ${hideMenu ? "hide-menu" : "show-menu"}`}>
           <ul>
             <li>
@@ -30,7 +33,6 @@ function Navbar({ user, signOutAction }) {
                 Rooms
               </Link>
             </li>
-            {/* <li>About</li> */}
             <li>
               <Link
                 href={"/contact"}
@@ -40,10 +42,8 @@ function Navbar({ user, signOutAction }) {
                 Contact Us
               </Link>
             </li>
-            <li>
-              {user ? (
-                <GuestDropdown user={user} signOutAction={signOutAction} />
-              ) : (
+            {!user && (
+              <li>
                 <Link
                   className={pathname.includes("account") || pathname === "/signin" ? "active" : ""}
                   href="/signin"
@@ -51,13 +51,16 @@ function Navbar({ user, signOutAction }) {
                 >
                   Guest Area
                 </Link>
-              )}
-            </li>
+              </li>
+            )}
           </ul>
         </nav>
-        <button onClick={() => setHideMenu(!hideMenu)} className="toggle-menu-button">
-          <FontAwesomeIcon icon={hideMenu ? faBars : faClose} />
-        </button>
+        <div className="navbar-actions">
+          {user && <GuestDropdown user={user} signOutAction={signOutAction} />}
+          <button onClick={() => setHideMenu(!hideMenu)} className="toggle-menu-button">
+            <FontAwesomeIcon icon={hideMenu ? faBars : faClose} />
+          </button>
+        </div>
       </div>
     </header>
   );

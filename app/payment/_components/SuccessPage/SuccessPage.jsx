@@ -9,16 +9,18 @@ import { useEffect } from "react";
 
 const SUPABASE_ROOMS_URL = process.env.NEXT_PUBLIC_SUPABASE_IMGS_URL;
 
-async function SuccessPage({ reservation }) {
-  if (reservation.status?.toLowerCase() === "confirmed")
-    try {
-      await fetch(
+function SuccessPage({ reservation }) {
+  useEffect(() => {
+    if (reservation.status?.toLowerCase() === "confirmed") {
+      fetch(
         `${process.env.NEXT_PUBLIC_APP_URL}/api/clear-pending-reservation`,
         { method: "POST" }
-      );
-    } catch (err) {
-      console.log({ err });
+      ).catch((err) => {
+        console.log({ err });
+      });
     }
+  }, [reservation.status]);
+
   return (
     <>
       <Banner title={"CHECKOUT OVERVIEW"} />
@@ -49,7 +51,7 @@ async function SuccessPage({ reservation }) {
             </div>
             <div className={`${styles["detail-group"]}`}>
               <label>Total Amount</label>
-              <span>${(reservation.reserved_price * 1).toFixed(2)}</span>
+              <span>₹{(reservation.reserved_price * 1).toFixed(2)}</span>
             </div>
           </div>
           <div className={`${styles["room-preview"]}`}>
