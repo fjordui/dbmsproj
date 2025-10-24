@@ -17,6 +17,11 @@ export async function POST(req, res) {
   const headersList = headers();
   const requestBody = await req.json();
 
+  // Get the base URL dynamically from headers (works with Vercel)
+  const protocol = headersList.get("x-forwarded-proto") || "http";
+  const host = headersList.get("host") || headersList.get("x-forwarded-host");
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || `${protocol}://${host}`;
+
   // PREVENT MALICIOUS ACCESS
 
   const bearerToken = headersList.get("Authorization");
@@ -144,8 +149,8 @@ export async function POST(req, res) {
         mode: "payment",
         customer_email: guest.email,
         expires_at: Math.floor(Date.now() / 1000) + 3600 * 2, // EXPIRE IN 2 HOURS FROM CREATION TIME
-        success_url: `${process.env.NEXT_PUBLIC_APP_URL}/payment?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/reservations/checkout`,
+        success_url: `${baseUrl}/payment?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${baseUrl}/reservations/checkout`,
       });
       // console.log({ session });
       const updated_session = await stripe.checkout.sessions.update(
