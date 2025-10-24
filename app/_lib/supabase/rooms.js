@@ -65,6 +65,6 @@ export async function filterRoomsByDate(
     .from("rooms")
     .select("*")
     .not("id", "in", `(${reservations_ids.join(",")})`);
-
+  console.log("Filtered rooms:", rooms); 
   return rooms;
 }

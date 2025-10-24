@@ -21,11 +21,11 @@ async function RoomContainer({ params }) {
 
   const room = await getRoomBySlug(room_slug);
 
-  const room_images = await getRoomImages(room_slug ?? []);
+  const room_images = await getRoomImages(room?.id);
 
-  const images = room_images.map(
-    (item) => `${SUPABASE_ROOMS_URL}/${item.img_path}`
-  );
+  const images = room_images?.map(
+  (item) => `${SUPABASE_ROOMS_URL}/${item.img_path}`
+) ?? [];
 
   if (!room) notFound();
 
@@ -74,7 +74,7 @@ async function RoomContainer({ params }) {
       <Features room={room} />
       <RoomSlider images={images} />
       <RoomBookingForm bookingAction={bookingAction} room={room} />
-      <RoomDescription />
+      <RoomDescription room={room} />
       <Facilities />
       <BookingPolicy />
     </>
