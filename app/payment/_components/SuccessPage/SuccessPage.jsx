@@ -13,7 +13,7 @@ function SuccessPage({ reservation }) {
   useEffect(() => {
     if (reservation.status?.toLowerCase() === "confirmed") {
       fetch(
-        `${process.env.NEXT_PUBLIC_APP_URL}/api/clear-pending-reservation`,
+        `/api/clear-pending-reservation`,
         { method: "POST" }
       ).catch((err) => {
         console.log({ err });

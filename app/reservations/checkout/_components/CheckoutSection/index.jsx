@@ -107,7 +107,7 @@ async function CheckoutSection() {
         process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
       );
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_APP_URL}/api/stripe`,
+        `/api/stripe`,
         { pending_reservation },
         {
           headers: { Authorization: `Bearer ${session?.supabaseAccessToken}` },
