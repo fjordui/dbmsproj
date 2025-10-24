@@ -103,11 +103,16 @@ async function CheckoutSection() {
         }
       );
 
+      const headersList = headers();
+      const protocol = headersList.get("x-forwarded-proto") || "http";
+      const host = headersList.get("host");
+      const baseUrl = `${protocol}://${host}`;
+
       const stripe = await loadStripe(
         process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
       );
       const response = await axios.post(
-        `/api/stripe`,
+        `${baseUrl}/api/stripe`,
         { pending_reservation },
         {
           headers: { Authorization: `Bearer ${session?.supabaseAccessToken}` },
