@@ -14,7 +14,7 @@ function HeroSection({ bookingSearchAction }) {
           <BookingForm bookingSearchAction={bookingSearchAction} />
         </div>
         <div className={styles.heroTitle}>
-          <p>Find Comfort In a Foriegn Land With Us</p>
+          <p>Experience Luxury and Comfort in the Heart of India</p>
           <p>Book Now, Pay On Arrival</p>
           <div className={styles.heroCTA}>
             <Modal>

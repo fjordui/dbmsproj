@@ -31,7 +31,7 @@ function FormDayPicker({ handleDateSelection, start, end }) {
         );
       } else {
         reservations = await getRoomReservations(room_slug);
-        busy_days = reservations.map((item) => ({ before: item.end_date, after: item.start_date }));
+        busy_days = reservations?.map((item) => ({ before: item.end_date, after: item.start_date })) ?? [];
       }
 
       // console.log("BLOCKED");

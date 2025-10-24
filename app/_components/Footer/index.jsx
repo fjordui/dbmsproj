@@ -8,9 +8,9 @@ function Footer() {
         <div>
           <h3>Contact Us</h3>
           <ul>
-            <li>email@gmail.com</li>
-            <li>+212 6 77 88 99 00</li>
-            <li>XYZ Street Agadir</li>
+            <li>student@vit.edu.in</li>
+            <li>+91 xxxxx xxxxx</li>
+            <li>Mumbai, Maharashtra</li>
             <li className={styles.icons}></li>
           </ul>
         </div>

@@ -13,15 +13,35 @@ export async function getRoomBySlug(slug) {
   return rooms?.at(0);
 }
 
-export async function getAllRooms() {
-  let { data: rooms, error } = await supabase.from("rooms").select("*");
+export async function getRoomReservations(room_slug) {
+  // First get the room by slug to get its ID
+  const room = await getRoomBySlug(room_slug);
+  
+  if (!room) return []; // Return empty array if room not found
+  
+  let { data: reservations, error } = await supabase
+    .from("reservations")
+    .select("*")
+    .eq("room_id", room.id)
+    .eq("status", "confirmed");
 
-  // await new Promise((res) => setTimeout(res, 2000));
+  if (error) {
+    console.log({ reservationsError: error.message });
+    return [];
+  }
+
+  return reservations ?? []; // Always return array, never null
+}
+
+export async function getAllRooms() {
+  let { data: rooms, error } = await supabase
+    .from("rooms")
+    .select("id, name, description, price, location, capacity, image_url, created_at, updated_at, slug, thumbnail"); // ✅ ADD slug and thumbnail
 
   if (error) {
     console.log({ roomsError: error.message });
   }
-
+  console.log("getAllRooms returning:", rooms);
   return rooms;
 }
 
@@ -61,9 +81,9 @@ export async function filterRoomsByDate(
 
   const reservations_ids = reservations?.map((item) => item.room_id) ?? [];
 
-  let { data: rooms, rooms_error } = await supabase
+  let { data: rooms, error: rooms_error } = await supabase
     .from("rooms")
-    .select("*")
+    .select("*") // This should already include slug if your table has it
     .not("id", "in", `(${reservations_ids.join(",")})`);
   console.log("Filtered rooms:", rooms); 
   return rooms;

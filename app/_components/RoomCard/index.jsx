@@ -16,7 +16,7 @@ function RoomCard({ room }) {
         <Card.Description className={styles.roomDescription}>
           <h2>{room.name}</h2>
 
-          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officia voluptates amet atque.</p>
+          <p>{room.description}</p>
         </Card.Description>
       </Card>
     </Link>
