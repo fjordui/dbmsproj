@@ -1,5 +1,18 @@
 import supabase from "./db";
 
+export async function getRoomBySlug(slug) {
+  let { data: rooms, error } = await supabase
+    .from("rooms")
+    .select("*")
+    .eq("slug", slug);
+
+  if (error) {
+    console.log({ roomsError: error.message });
+  }
+
+  return rooms?.at(0);
+}
+
 export async function getAllRooms() {
   let { data: rooms, error } = await supabase.from("rooms").select("*");
 

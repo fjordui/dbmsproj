@@ -7,7 +7,7 @@ import RoomBookingForm from "../RoomBookingForm";
 import RoomDescription from "../RoomDescription";
 import Facilities from "../Facilities";
 import BookingPolicy from "../BookingPolicy";
-import { getRoomById, getRoomImages } from "@/app/_lib/supabase/rooms";
+import { getRoomBySlug, getRoomImages } from "@/app/_lib/supabase/rooms";
 import { notFound, redirect } from "next/navigation";
 import { bookingSchema } from "@/app/_lib/zodSchemas";
 import { cookies } from "next/headers";
@@ -17,9 +17,9 @@ const SUPABASE_ROOMS_URL = process.env.NEXT_PUBLIC_SUPABASE_IMGS_URL;
 async function RoomContainer({ params }) {
   const room_slug = params?.room_slug;
 
-  if (!room_slug || !/^-?\d+$/.test(room_slug)) notFound();
+  if (!room_slug) notFound();
 
-  const room = await getRoomById(room_slug);
+  const room = await getRoomBySlug(room_slug);
 
   const room_images = await getRoomImages(room_slug ?? []);
 
