@@ -1,5 +1,5 @@
 "use client";
-import { faBars, faClose, faHotel } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faClose, faHotel, faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import fa_styles from "@fortawesome/fontawesome-svg-core/styles.css";
@@ -56,6 +56,11 @@ function Navbar({ user, signOutAction }) {
           </ul>
         </nav>
         <div className="navbar-actions">
+          {!user && (
+            <Link href="/signin" className="login-icon-button">
+              <FontAwesomeIcon icon={faRightToBracket} />
+            </Link>
+          )}
           {user && <GuestDropdown user={user} signOutAction={signOutAction} />}
           <button onClick={() => setHideMenu(!hideMenu)} className="toggle-menu-button">
             <FontAwesomeIcon icon={hideMenu ? faBars : faClose} />
