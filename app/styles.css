@@ -115,6 +115,24 @@ header nav ul {
   border-radius: 4px;
 }
 
+.login-icon-button {
+  padding: 2px 8px;
+  background-color: transparent;
+  border: 1px solid #333;
+  outline: none;
+  color: #333;
+  font-size: 36px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 150ms linear;
+}
+
+.login-icon-button:hover {
+  background-color: #33333310;
+}
+
 @media (min-width: 820px) {
   .toggle-menu-button {
     display: none;
