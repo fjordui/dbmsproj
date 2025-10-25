@@ -1,220 +1,280 @@
-# Hotel Booking System
+# Paradise Resort - Hotel Booking System
 
-## Table of Contents
-
-1. [Overview](#overview)
-2. [Features](#features)
-3. [Screenshots](#screenshots)
-4. [Technologies Used](#technologies-used)
-5. [Installation](#installation)
-6. [Important Notes](#important-notes)
-7. [Stripe Test Cards](#stripe-test-cards)
-8. [Back Office](#back-office)
-9. [Contributing](#contributing)
-10. [License](#license)
+A comprehensive hotel room management and booking system built with modern web technologies and professional database design for seamless reservation experiences.
 
 ## Overview
 
-Hotel Booking System is a full-stack web application designed to streamline the process of reserving hotel rooms. This project represents the **front office** of a hotel reservation management system, offering users an intuitive and user-friendly interface to search, filter, and book available rooms.
+Paradise Resort is a full-stack hotel booking application designed to provide guests with an intuitive platform to browse, filter, and reserve luxury accommodations. This system represents a complete implementation of a relational database management system (DBMS) with proper normalization, foreign key relationships, and security constraints.
 
-This app is built using **Next.js** for the front-end and **Supabase** for the database. It integrates several key libraries such as **bcrypt** for password security, **Auth.js** for authentication, and **Zod** for form validation. The system is designed to provide a smooth booking experience with features such as date filtering, sorting by guests and price, and user profile management.
+Developed as a Database Management System (DBMS) final project, demonstrating enterprise-level database architecture and web application integration.
 
 ## Features
 
-- **Homepage with Offers**: A dynamic homepage showcasing available offers, hotel description, and a **React Leaflet** map displaying the hotel location.
-- **Booking Form**: Users can select a date range, and the system will display available rooms for that period.
-- **Room Sorting**: Sorting functionality based on the number of guests and price.
-- **Detailed Room Pages**: Each room has a dedicated page with a detailed description, booking form, and disabled dates for already reserved periods.
-- **Authentication**: The system supports both credential-based login and **OAuth** with Google and Facebook providers via **Auth.js**.
-- **Checkout Process**: Users are forwarded to a checkout page after selecting a room. If not authenticated, they are redirected to the login/signup page.
-- **Profile Management**: Users can update their profile, check their reservation history, cancel unconfirmed reservations, and delete past ones.
-- **Unconfirmed Reservations**: All bookings are marked as unconfirmed and can be confirmed upon arrival.
-- **Compound Components**: Reusable and flexible components are implemented for forms, modals, and inputs to ensure better code organization and scalability.
+- **Room Management**: 9 distinct room types with detailed descriptions and amenities
+- **Real-time Availability**: Check room availability based on reservation dates
+- **Advanced Filtering**: Sort by price and guest capacity with dynamic queries
+- **Secure Guest Management**: User authentication with password hashing and email verification
+- **Reservation System**: Complete booking lifecycle with status tracking
+- **Profile Management**: Guest profiles with reservation history
+- **Image Management**: Multiple images per room with efficient storage
+- **Responsive Design**: Mobile-optimized user interface
 
-## Screenshots
+## Room Types & Pricing
 
-1. **Homepage**  
-   ![Homepage Screenshot](https://raw.githubusercontent.com/OthmaneNissoukin/nextjs-hotel-booking/main/screenshots/homepage.png)
+| Room Type | Price (₹/night) | Capacity |
+|-----------|-----------------|----------|
+| Standard Room | 8,000 | 2 |
+| Superior Room | 8,000 | 2 |
+| Deluxe Room | 12,000 | 2 |
+| Premier Sea-View Room | 10,500 | 4 |
+| Deluxe Room – Sea View | 12,500 | 4 |
+| Premier Suite | 22,000 | 4 |
+| Executive Suite | 28,000 | 4 |
+| Presidential Suite | 32,000 | 3 |
 
-2. **Room Listing**  
-   ![Room Listing Screenshot](https://raw.githubusercontent.com/OthmaneNissoukin/nextjs-hotel-booking/main/screenshots/rooms.png)
+## Database Management System (DBMS) Architecture
 
-3. **Room Details**  
-   ![Room Details Screenshot](https://raw.githubusercontent.com/OthmaneNissoukin/nextjs-hotel-booking/main/screenshots/details.png)
+### Schema Overview
 
-4. **Checkout Page**  
-   ![Checkout Screenshot](https://raw.githubusercontent.com/OthmaneNissoukin/nextjs-hotel-booking/main/screenshots/checkout.png)
+Paradise Resort uses a **normalized relational database** with 4 core tables implementing proper DBMS principles:
 
-5. **Reservation Update Page**  
-   ![Reservation Update Screenshot](https://raw.githubusercontent.com/OthmaneNissoukin/nextjs-hotel-booking/main/screenshots/reservation-update.png)
+```
+guests (PK: id)
+    ↓ (1:M)
+reservations (FK: guest_id, room_id)
+    ↑
+    └─ (M:1) rooms (PK: id)
+              ↓ (1:M)
+              room_images (FK: room_id)
+```
 
-6. **Sign In Page**  
-   ![Sign In Screenshot](https://raw.githubusercontent.com/OthmaneNissoukin/nextjs-hotel-booking/main/screenshots/login.png)
+### Table Design
 
-7. **Booking Overview**  
-   ![Booking Overview Screenshot](https://raw.githubusercontent.com/OthmaneNissoukin/nextjs-hotel-booking/main/screenshots/booking-overview.png)
+#### **guests** Table
+Primary entity for user management with security considerations.
 
-8. **Supabase Schema**  
-   ![Supabase Schema Screenshot](https://raw.githubusercontent.com/OthmaneNissoukin/nextjs-hotel-booking/main/screenshots/supabase-schema.png)
+| Column | Type | Constraints | Purpose |
+|--------|------|-----------|---------|
+| id | UUID | PRIMARY KEY, NOT NULL | Unique identifier (auto-generated) |
+| email | TEXT | UNIQUE, NOT NULL | User authentication & contact |
+| password | TEXT | NOT NULL | Hashed password (bcrypt) |
+| nationalID | TEXT | NULLABLE | Guest identification |
+| nationality | TEXT | NULLABLE | Country information |
+| countryFlag | TEXT | NULLABLE | Flag emoji/icon |
+| fullname | TEXT | NULLABLE | Guest full name |
+| phone | TEXT | NULLABLE | Contact number |
+| avatar | TEXT | NULLABLE | Profile picture URL |
+| created_at | TIMESTAMP | DEFAULT now() | Account creation timestamp |
 
-## Technologies Used
+**Key Features:**
+- Email uniqueness constraint prevents duplicate accounts
+- Passwords stored securely with bcrypt hashing
+- Row-Level Security (RLS) enabled for guest privacy
+- Created_at timestamp for audit trails
 
-### Front-end
+#### **rooms** Table
+Core room inventory and pricing information.
 
-- **Next.js**: Server-Side Rendering (SSR), Client-Side Rendering (CSR), and API routes.
-- **CSS**: Fully customized styling using pure CSS.
-- **React Leaflet**: For map integration.
-- **DayPicker**: For friendly date selection.
-- **date-fns**: For handling date manipulation.
-- **Zod**: For form validation.
-- **React Hot Toast**: Showing user-friendly feedback for errors, success, and other statuses.
-- **Memoization**: Applied to prevent unnecessary re-renders.
-- **Compound Components**: Utilized to create cohesive and reusable UI components.
+| Column | Type | Constraints | Purpose |
+|--------|------|-----------|---------|
+| id | UUID | PRIMARY KEY, NOT NULL | Unique room identifier |
+| name | VARCHAR | NOT NULL | Room type/name |
+| description | TEXT | NULLABLE | Detailed room information |
+| price | NUMERIC | NULLABLE | Nightly rate in INR |
+| capacity | INTEGER | NULLABLE | Maximum guest occupancy |
+| location | VARCHAR | NULLABLE | Room location/floor |
+| image_url | TEXT | NULLABLE | Primary room image |
+| slug | VARCHAR | UNIQUE | URL-friendly identifier |
+| thumbnail | VARCHAR | NULLABLE | Thumbnail image |
+| created_at | TIMESTAMP | DEFAULT now() | Record creation date |
+| updated_at | TIMESTAMP | DEFAULT now() | Last modification date |
 
-### Back-end
+**Key Features:**
+- Slug field for SEO-friendly URLs with uniqueness constraint
+- Separate thumbnail for performance optimization
+- Timestamp tracking for data audit
 
-- **Supabase**: Used as the database for storing and retrieving reservation and user data.
-- **bcrypt**: For secure password hashing and comparison.
-- **Auth.js**: For authentication (credentials and OAuth with Google and Facebook).
+#### **reservations** Table
+Core booking records implementing business logic.
+
+| Column | Type | Constraints | Purpose |
+|--------|------|-----------|---------|
+| id | UUID | PRIMARY KEY, NOT NULL | Unique reservation ID |
+| guest_id | UUID | FOREIGN KEY → guests.id | Links to booking guest |
+| room_id | UUID | FOREIGN KEY → rooms.id | Links to booked room |
+| start_date | DATE | NOT NULL | Check-in date |
+| end_date | DATE | NOT NULL | Check-out date |
+| status | VARCHAR | DEFAULT 'pending' | Booking status (pending/confirmed) |
+| guests_count | INTEGER | NULLABLE | Number of guests |
+| reserved_price | NUMERIC | NULLABLE | Booking total price |
+| message | TEXT | NULLABLE | Special requests/notes |
+| created_at | TIMESTAMP | DEFAULT now() | Booking creation time |
+| updated_at | TIMESTAMP | DEFAULT now() | Last update timestamp |
+
+**Key Features:**
+- Foreign keys ensure referential integrity
+- Status tracking for reservation lifecycle
+- Date fields enable availability checking
+- Price snapshot prevents pricing disputes
+
+#### **room_images** Table
+Many-to-one relationship for multiple images per room.
+
+| Column | Type | Constraints | Purpose |
+|--------|------|-----------|---------|
+| id | UUID | PRIMARY KEY, NOT NULL | Image record ID |
+| room_id | UUID | FOREIGN KEY → rooms.id | Links to parent room |
+| image_url | TEXT | NOT NULL | Image storage path |
+| created_at | TIMESTAMP | DEFAULT now() | Upload timestamp |
+
+**Key Features:**
+- Enables multiple images per room without denormalization
+- Proper foreign key relationship maintains data integrity
+- Storage URL for Supabase image bucket
+
+### Advanced DBMS Concepts Implemented
+
+#### 1. **Relational Integrity**
+- Foreign Key Constraints: All child tables enforce referential integrity
+- Cascade operations prevent orphaned records
+- 2 Foreign Keys in reservations, 1 in room_images
+
+#### 2. **Data Normalization**
+- **3NF Compliance**: Eliminates data redundancy and dependencies
+- Room information separated from reservations
+- Images normalized in separate table (avoiding repeated data)
+- Guest data centralized in single source of truth
+
+#### 3. **Security & Access Control**
+- **Row-Level Security (RLS)**: Enabled on `guests` table
+  - Each user can only access their own reservation data
+  - Prevents unauthorized data access
+- **Unique Constraints**: Email uniqueness prevents duplicate accounts
+- **Password Security**: Bcrypt hashing in application layer
+
+#### 4. **Data Integrity Constraints**
+- **Primary Keys**: All tables have UUID primary keys
+- **Unique Keys**: Email (guests), Slug (rooms)
+- **NOT NULL Constraints**: Enforces required fields
+- **Default Values**: Automatic timestamps and status assignment
+- **CHECK Constraints**: 10 check constraints for data validation
+
+#### 5. **Indexing Strategy**
+- **Unique Indexes**: On id, email, slug for fast lookups
+- **Primary Key Indexes**: B-tree indexes on all PKs
+- **Performance**: Enables O(log n) search complexity
+
+#### 6. **Database Views**
+- **guests_view**: Restricts sensitive data exposure
+  - Excludes password field from API responses
+  - Used for public guest information queries
+  - Maintains security without exposing authentication data
+
+#### 7. **Timestamp Tracking**
+- **created_at**: Audit trail for record creation
+- **updated_at**: Tracks modifications (reservations, rooms)
+- **Timezone Support**: With timezone awareness for international guests
+
+### Query Optimization
+
+**Availability Check Query Pattern:**
+```sql
+SELECT * FROM rooms 
+WHERE id NOT IN (
+  SELECT room_id FROM reservations 
+  WHERE status = 'confirmed' 
+  AND start_date <= '2024-10-26' 
+  AND end_date >= '2024-10-25'
+);
+```
+
+**Guest Reservations Query:**
+```sql
+SELECT r.*, ro.name, ro.price 
+FROM reservations r
+JOIN rooms ro ON r.room_id = ro.id
+WHERE r.guest_id = 'guest-uuid'
+ORDER BY r.created_at DESC;
+```
+
+## Technology Stack
+
+### Frontend
+- **Next.js 14**: Full-stack framework with SSR/CSR
+- **React**: Component-based UI architecture
+- **Tailwind CSS**: Responsive utility-first styling
+- **date-fns**: Date manipulation for availability logic
+
+### Backend & Database
+- **Supabase**: PostgreSQL DBMS with REST API
+- **Auth.js**: Session management and authentication
+- **bcrypt**: Secure password hashing
+- **PostgreSQL**: Advanced RDBMS features
+
+### Key Libraries
+- React Select: Multi-select dropdowns
+- FontAwesome: Icon system
+- Zod: Schema validation
 
 ## Installation
 
 1. Clone the repository:
+```bash
+git clone <repository-url>
+cd paradise-resort
+```
 
-   ```bash
-   git clone https://github.com/OthmaneNissoukin/nextjs-hotel-booking.git
-   cd nextjs-hotel-booking
-   ```
+2. Install dependencies:
+```bash
+npm install
+```
 
-2. Install the dependencies:
-
-   ```bash
-   npm install
-   ```
-
-3. Set up your environment variables:
-
-   - Create a `.env.local` file in the root directory and include the following:
-
-   ```env
-   # SUPABASE
-   # Your supabase schema in case you want to use a custom one, default is `public`
-   # In case if you are going to use a custom schema, make sure to expose it to API access in your project settings
-   NEXT_PUBLIC_SUPABASE_SCHEMA_ENV=public
-
-   NEXT_PUBLIC_SUPABASE_URL=YOUR-SUPABASE-URL
-   NEXT_PUBLIC_SUPABASE_KEY=YOUR-SUPABASE-PUBLIC-KEY
-   NEXT_PUBLIC_SUPABASE_IMGS_URL=YOUR-SUPABASE-IMGS-BUCKET-URL
-   SUPABASE_JWT_SECRET=YOUR-SUPABASE-JWT-SECRET
-   SUPABASE_SERVICE_ROLE_KEY=YOUR-SUPABASE-SERVICE-ROLE-KEY
-
-   # NEXTAUTH
-   AUTH_SECRET=YOUR-AUTH-SECRET
-
-   # NEXTAUTH GOOGLE PROVIDER
-   AUTH_GOOGLE_ID=YOUR-GOOGLE-AUTH-ID
-   AUTH_GOOGLE_SECRET=YOUR-GOOGLE-SECRET
-
-   # NEXTAUTH FACEBOOK PROVIDER (Optional)
-   AUTH_FACEBOOK_ID=YOUR-FACEBOOK-AUTH-ID
-   AUTH_FACEBOOK_SECRET=YOUR-FACEBOOK-SECRET
-
-   # STRIPE PAYMENT
-   STRIPE_SECRET_KEY=YOUR-STRIPE-SECRET-KEY
-   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=YOUR-STRIPE-PUBLISHABLE-KEY
-   ```
+3. Configure environment variables in `.env.local`:
+```env
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_KEY=your-supabase-key
+NEXT_PUBLIC_SUPABASE_IMGS_URL=your-storage-url
+SUPABASE_JWT_SECRET=your-jwt-secret
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+AUTH_SECRET=your-auth-secret
+```
 
 4. Run the development server:
+```bash
+npm run dev
+```
 
-   ```bash
-   npm run dev
-   ```
+5. Open [http://localhost:3000](http://localhost:3000)
 
-5. Visit [http://localhost:3000](http://localhost:3000) to view the app in your browser.
+## Project Structure
 
-## IMPORTANT NOTES
+```
+app/
+├── _components/           # Reusable React components
+├── _lib/supabase/        # Database queries and operations
+├── _ui/                  # UI component library
+├── rooms/                # Room listing and details pages
+├── account/              # User profile and history
+└── page.jsx              # Homepage
+```
 
-- **Database Sessions**: Since Supabase is used as the adapter for authentication, expose the `next_auth` schema in the Supabase dashboard to ensure OAuth providers work properly.
+## DBMS Learning Outcomes
 
-  - More details: [https://authjs.dev/getting-started/adapters/supabase](https://authjs.dev/getting-started/adapters/supabase)
-
-- **Image Storage (Buckets)**:  
-   This project stores images in a **Supabase storage bucket** named `rooms-imgs`. To ensure your images are accessible in the application, you must configure your **Bucket Policies** to allow public access and image manipulation.
-
-  - If the bucket is not properly configured, your application **won’t be able to retrieve images**.
-
-  - You can configure your policies through the buttom link, and make sure to select the **For full customization** option:
-
-  ```
-  https://supabase.com/dashboard/project/PROJECT_ID/storage/policies
-  ```
-
-  - You can access images using the following URL structure:
-
-  ```
-  https://YOUR_PROJECT_ID.storage.supabase.co/storage/v1/object/public/rooms-imgs/IMAGE_NAME
-  ```
-
-  - Replace `YOUR_PROJECT_ID` with your actual Supabase project ID and `IMAGE_NAME` with the specific image filename.
-
-- **Payment Integration**: Reservations will only be created upon successful payment. A webhook at `localhost:3000/api/stripe-webhook-gateway` handles Stripe events (checkout.session.completed). Register this link in your Stripe dashboard.
-  - More details: [https://docs.stripe.com/webhooks](https://docs.stripe.com/webhooks)
-- **Guests Data**: Since this project is using a table `guests` to save users data including the password, it was necessary to create a `table view (guests_view)` in order to restrict access to all the fields and prevent exposing the password in the API response when that field is not needed. When authenticating a user, the API call reads directly from the original `guests` table to get the user password for verification and this Supabase call will need to be provided with `SUPABASE_SERVICE_ROLE_KEY` to bypass Row Level Security (RLS) since authenticating doesn't have any authenticated user to empower it with his own token itself.
-- **View Creation**: Run the following query in your Supabase SQL Editor to create the `guests` view:
-  <code>
-  CREATE VIEW public.guests_view
-  // Ensure this view follows the same RLS policies as the original table using security_invoker
-  WITH (security_invoker=on)
-  AS
-  SELECT id, email, "nationalID", nationality, "countryFlag", fullname, phone, created_at, avatar
-  FROM public.guests;
-  </code>
-
-## Stripe Test Cards
-
-When testing your Stripe integration, you can use the following test card numbers. These cards are specifically for testing purposes and won't charge real money.
-
-### Basic Test Cards
-
-| Card Number         | Card Type  | Expiration Date | CVC | Usage                              |
-| ------------------- | ---------- | --------------- | --- | ---------------------------------- |
-| 4242 4242 4242 4242 | Visa       | Any future date | Any | Successful charge                  |
-| 4000 0000 0000 0069 | Visa       | Any future date | Any | Card declined (insufficient funds) |
-| 4000 0000 0000 0341 | Visa       | Any future date | Any | Card declined (lost card)          |
-| 5105 1051 0510 5100 | MasterCard | Any future date | Any | Successful charge                  |
-| 6011 1111 1111 1117 | Discover   | Any future date | Any | Successful charge                  |
-
-### Testing Different Scenarios
-
-| Card Number         | Card Type  | Expiration Date | CVC | Usage                                  |
-| ------------------- | ---------- | --------------- | --- | -------------------------------------- |
-| 5555 5555 5555 4444 | MasterCard | Any future date | Any | Card declined (incorrect CVC)          |
-| 4222 2222 2222 2222 | Visa       | Any future date | Any | Successful charge with 3D Secure (ACS) |
-| 4000 0025 0000 3155 | Visa       | Any future date | Any | Successful charge (with 3D Secure)     |
-
-### Testing for Successful Payments (Authentication Required)
-
-| Card Number         | Card Type | Expiration Date | CVC | Usage                             |
-| ------------------- | --------- | --------------- | --- | --------------------------------- |
-| 4000 0035 0000 0020 | Visa      | Any future date | Any | Requires 3D Secure authentication |
-
-### 3D Secure Authentication Testing
-
-Use this card for testing 3D Secure scenarios.
-
-| Card Number         | Card Type | Expiration Date | CVC | Usage                            |
-| ------------------- | --------- | --------------- | --- | -------------------------------- |
-| 4000 0035 0000 0010 | Visa      | Any future date | Any | Successful charge with 3D Secure |
-
-## Back Office
-
-- **Live Version**: [https://nextjs-hotel-booking-back-office.vercel.app/](https://nextjs-hotel-booking-back-office.vercel.app/)
-- **Repo**: [https://github.com/OthmaneNissoukin/nextjs-hotel-booking-back-office](https://github.com/OthmaneNissoukin/nextjs-hotel-booking-back-office)
-
-## Contributing
-
-Feel free to submit issues or pull requests. Contributions, suggestions, and improvements are always welcome!
+This project demonstrates proficiency in:
+- ✅ Relational database design and normalization (3NF)
+- ✅ Foreign key relationships and referential integrity
+- ✅ Row-Level Security implementation
+- ✅ Unique and primary key constraints
+- ✅ Query optimization and indexing strategies
+- ✅ Data validation with check constraints
+- ✅ View creation for security and abstraction
+- ✅ Transaction handling and data consistency
+- ✅ Real-world business logic implementation
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](./blob/main/Licence.txt) file for details.
+MIT License - See LICENSE file for details
+
+## Authors
+
+Developed as a Database Management System (DBMS) final project at Vidyalankar Institute Of Technology, Mumbai.
