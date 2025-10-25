@@ -168,6 +168,7 @@ header nav ul {
   gap: 12px;
   color: #161616;
   transition: all 150ms linear;
+  margin-left: -10px;
 }
 
 .logo-container:hover {
