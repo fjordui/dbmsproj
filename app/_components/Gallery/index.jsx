@@ -13,7 +13,7 @@ async function Gallery() {
         <div className={styles.galleryGrid}>
           {rooms.map((item) => (
             <div key={item.id} className={styles.thumbnail}>
-              <Image fill src={`${SUPABASE_ROOMS_URL}/${item.thumbnail}`} alt="" />
+              <Image fill src={`${SUPABASE_ROOMS_URL}/${item.image_url}`} alt="" />
             </div>
           ))}
         </div>

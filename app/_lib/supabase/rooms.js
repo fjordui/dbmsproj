@@ -36,7 +36,7 @@ export async function getRoomReservations(room_slug) {
 export async function getAllRooms() {
   let { data: rooms, error } = await supabase
     .from("rooms")
-    .select("id, name, description, price, location, capacity, image_url, created_at, updated_at, slug, thumbnail"); // ✅ ADD slug and thumbnail
+    .select("id, name, description, price, location, capacity, image_url, created_at, updated_at, slug");
 
   if (error) {
     console.log({ roomsError: error.message });

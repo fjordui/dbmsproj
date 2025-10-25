@@ -48,7 +48,7 @@ if (
         id={item.id}
         title={item.name}
         price={item.price}
-        imgPath={item.thumbnail}
+        imgPath={item.image_url}
         link={item.slug || item.id} // FALLBACK TO ID IF SLUG MISSING
       />
     ))}

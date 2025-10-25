@@ -1,14 +1,16 @@
 "use client";
-import Slider from "../Slider";
 import BookingForm from "../BookingForm";
 import styles from "./index.module.css";
 import BookingButton from "../BookingButton";
 import Modal from "@/app/_components/Modal/Modal";
-const images = ["/bg.png", "/bg.png", "/bg.png", "/bg.png"];
 
 function HeroSection({ bookingSearchAction }) {
   return (
-    <Slider images={images}>
+    <div className={styles.heroSection}>
+      <video autoPlay muted loop playsInline className={styles.backgroundVideo}>
+        <source src="/four.mp4" type="video/mp4" />
+      </video>
+      
       <div className={`container ${styles.wrapper}`}>
         <div className="bookingFormContainer">
           <BookingForm bookingSearchAction={bookingSearchAction} />
@@ -38,7 +40,7 @@ function HeroSection({ bookingSearchAction }) {
           </div>
         </div>
       </div>
-    </Slider>
+    </div>
   );
 }
 

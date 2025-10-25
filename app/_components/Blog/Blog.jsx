@@ -12,7 +12,7 @@ function Blog() {
         <div className={styles.blogGrid}>
           <Card>
             <Card.Thumbnail>
-              <Image fill src="/bg.png" alt="" />
+              <Image fill src="/blog-3.jpg" alt="" />
             </Card.Thumbnail>
             <Card.Description className={styles.blogDescriptionContainer}>
               <h2 className={styles.blogHeading}>Top 10 Must-Visit Places Near Our Hotel</h2>
@@ -24,7 +24,7 @@ function Blog() {
           </Card>
           <Card>
             <Card.Thumbnail>
-              <Image fill src="/bg.png" alt="" />
+              <Image fill src="/lobby.jpg" alt="" />
             </Card.Thumbnail>
             <Card.Description className={styles.blogDescriptionContainer}>
               <h2 className={styles.blogHeading}>5 Reasons to Choose Paradise Resort for Your Next Vacation</h2>
@@ -37,7 +37,7 @@ function Blog() {
 
           <Card>
             <Card.Thumbnail>
-              <Image fill src="/bg.png" alt="" />
+              <Image fill src="/facilities.jpg" alt="" />
             </Card.Thumbnail>
             <Card.Description className={styles.blogDescriptionContainer}>
               <h2 className={styles.blogHeading}>Wellness & Relaxation: A Guide to Our Spa Services</h2>
