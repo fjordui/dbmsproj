@@ -10,8 +10,11 @@ import { redirect } from "next/navigation";
 import ContactSection from "./_components/ContactSection";
 
 export const metadata = {
-  title: "Hotel Booking App",
-  description: "Hotel Booking App built with NextJS",
+  title: "Paradise Resort - Luxury Hotel Booking",
+  description: "Book your perfect stay at Paradise Resort. Luxury accommodations with premium amenities in the heart of Maharashtra.",
+    icons: {
+    icon: "/your-logo.jpg",
+  },
 };
 
 export default async function Home() {
