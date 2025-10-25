@@ -15,6 +15,9 @@ import { redirect } from "next/navigation";
 export const metadata = {
   title: "My Profile",
   description: "View and Edit your profile details",
+    icons: {
+    icon: "/final-logo.png",
+  },
 };
 
 async function Profile() {

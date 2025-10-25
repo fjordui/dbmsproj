@@ -7,6 +7,9 @@ import { cookies } from "next/headers";
 export const metadata = {
   title: "Sign Up",
   description: "Sign Up to the Hotel Booking App ",
+    icons: {
+    icon: "/final-logo.png",
+  },
 };
 
 async function Page() {

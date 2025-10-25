@@ -13,7 +13,7 @@ export const metadata = {
   title: "Paradise Resort - Luxury Hotel Booking",
   description: "Book your perfect stay at Paradise Resort. Luxury accommodations with premium amenities in the heart of Maharashtra.",
     icons: {
-    icon: "/your-logo.jpg",
+    icon: "/final-logo.png",
   },
 };
 

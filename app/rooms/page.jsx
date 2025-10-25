@@ -11,6 +11,9 @@ import { redirect } from "next/navigation";
 export const metadata = {
   title: "Rooms",
   description: "Discover and book a room at the Hotel Booking App ",
+    icons: {
+    icon: "/your-logo.jpg",
+  },
 };
 
 async function Rooms({ searchParams }) {

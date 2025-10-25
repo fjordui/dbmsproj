@@ -7,6 +7,9 @@ import { auth } from "@/auth";
 export const metadata = {
   title: "Edit Reservation",
   description: "Edit your already booked reservation ",
+    icons: {
+    icon: "/final-logo.png",
+  },
 };
 
 async function Page({ params }) {

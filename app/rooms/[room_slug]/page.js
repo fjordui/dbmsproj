@@ -5,6 +5,9 @@ import LoadingSpinner from "@/app/_ui/LoadingSpinner";
 export const metadata = {
   title: "Room Details",
   description: "Discover and book a room at the Hotel Booking App ",
+    icons: {
+    icon: "/final-logo.png",
+  },
 };
 
 function RoomDetails({ params }) {

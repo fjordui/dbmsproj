@@ -11,6 +11,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export const metadata = {
   title: "Booking Overview",
+    icons: {
+    icon: "/final-logo.png",
+  },
 };
 
 export default async function PreviewPage({ searchParams }) {

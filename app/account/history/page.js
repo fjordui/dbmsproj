@@ -8,6 +8,9 @@ import Link from "next/link";
 export const metadata = {
   title: "Booking History",
   description: "Reservations history at the Hotel Booking App ",
+    icons: {
+    icon: "/final-logo.png",
+  },
 };
 
 async function History() {

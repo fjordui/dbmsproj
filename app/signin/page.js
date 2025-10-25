@@ -6,6 +6,9 @@ import Banner from "../_components/Banner";
 export const metadata = {
   title: "Sign In",
   description: "Sign In to the Hotel Booking App ",
+    icons: {
+    icon: "/final-logo.png",
+  },
 };
 
 async function Page() {

@@ -6,6 +6,9 @@ import { redirect } from "next/navigation";
 export const metadata = {
   title: "Reservation Checkout",
   description: "Checkout your reservation and let yourself have a good stay with us",
+    icons: {
+    icon: "/final-logo.png",
+  },
 };
 
 async function Page() {
